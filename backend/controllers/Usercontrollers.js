@@ -8,12 +8,11 @@ const createtoken = (id) =>{
 }
 
 module.exports.register = async (req,res,next)=>{
-    console.log(req.body)
+   
     
         console.log(req.body)
          console.log('reached')
-        const {name,email,password} = req.body;
-        console.log({name,email,password})
+       
         await registeruser(req.body).then((data)=>{
             const token = createtoken(data)
             console.log(token)
@@ -22,7 +21,7 @@ module.exports.register = async (req,res,next)=>{
                 httpOnly:false,
                 maxage:maxage * 1000
             });
-            res.json({user:data,created:true})
+            res.json({user:data,username:req.body.username,created:true})
             
         }).catch((er)=>{
             console.log(er)
