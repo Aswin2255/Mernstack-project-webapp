@@ -48,17 +48,12 @@ module.exports.login = async(req,res,next)=>{
             console.log('ksksks')
             res.json({error:'no user found',login:false})
         })
-      /*  const {email,password} = req.body;
-        const user = await Usermodels.login(email,password)
-        const token = createtoken(user._id)
-        res.cookie('jwt',token,{
-            withCredentials:true,
-            httpOnly:false,
-            maxage:maxage * 1000
-
-        });
-        res.status(200).json({user:user.name,userid:user._id,created:true})*/
+    
   
+}
+module.exports.getuser = async(req,res,next)=>{
+    console.log( res.userdetails.username )
+    res.json({status:true,user:res.userdetails.username})
 }
 
 

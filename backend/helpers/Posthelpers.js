@@ -13,10 +13,20 @@ module.exports.createposthelper = async (post)=>{
     })
 
 }
-module.exports.editposthelper = async(post)=>{
+module.exports.getuserposthelper = async(userid)=>{
+    console.log(userid)
     return new Promise(async(resolve, reject) => {
-      let postt =   await db.get().collection(collection.postcollection). 
-      findOneAndUpdate({_id:ObjectId(post.id)},{$set:{post:post.post}})
+        let post = await db.get().collection(collection.postcollection).find({userid:ObjectID(userid)}).toArray()
+        resolve(post)
+
+    })
+}
+module.exports.editposthelper = async(post)=>{
+    
+    return new Promise(async(resolve, reject) => {
+      console.log(post)
+      let postt = await db.get().collection(collection.postcollection).findOneAndUpdate({_id:ObjectID(post.post.postid),userid:ObjectID(post.userid)},{$set:{post:post.post.post}})
+      console.log(postt)
       if(postt.value){
         resolve('post edited')
       }
@@ -30,8 +40,10 @@ module.exports.editposthelper = async(post)=>{
 module.exports.deleteposthelper = async(postid)=>{
     return new Promise(async(resolve, reject) => {
         let deletepost = await db.get().collection(collection.postcollection).findOneAndDelete({_id:ObjectID(postid)})
+        console.log(deletepost)
         if(deletepost.value){
-            resolve('post deleted')
+            let post = await db.get().collection(collection.postcollection).find({userid:ObjectId(deletepost.value._id)}).toArray()
+            resolve(post)
         }
         else{
             reject('post error')

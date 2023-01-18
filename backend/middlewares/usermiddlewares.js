@@ -14,6 +14,8 @@ module.exports.Verifyuser = (req,res,next)=>{
             else{
                 console.log(decodedToken.id)
                 const user = await db.get().collection(collection.usercollection).findOne({_id: ObjectId (decodedToken.id)})
+                console.log('kkkkkkkkkkkkkkkkk')
+                console.log(user)
                 
                 if(user){
                    

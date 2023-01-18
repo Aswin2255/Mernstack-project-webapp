@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt')
 module.exports.registeruser = async (userdetails) => {
     return new Promise(async (resolve, reject) => {
         let user = await db.get().collection(collection.usercollection).findOne({ email: userdetails.email })
+        
         console.log(user)
         if (user) {
             reject('user exist')

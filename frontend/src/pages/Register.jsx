@@ -4,8 +4,9 @@ import Cards from '../components/Cards'
 import {  useNavigate } from 'react-router-dom'
 import instance from '../Axios'
 import { useCookies } from 'react-cookie'
-import { useDispatch } from 'react-redux'
-import { adduser, userpresent } from '../Redux/Userslices'
+import { useDispatch, useSelector } from 'react-redux'
+import { adduser, getuser, userpresent } from '../Redux/Userslices'
+import { useEffect } from 'react'
 
 
 function Register() {
@@ -33,8 +34,8 @@ function Register() {
         }
       }
       const Navigate = useNavigate()
-      const [cookie,setcookie,removeCookie] = useCookies()
-      console.log(cookie)
+      
+      
       const [formstate,dispatch] = useReducer(formreducer,initialformstate)
       console.log(formstate)
       const submit = async (e)=>{
@@ -73,6 +74,12 @@ function Register() {
           payload:e.target.value
         })
        }
+       const user = useSelector(getuser)
+       useEffect(()=>{
+           if(user){
+            Navigate('/')
+           }
+       })
   return (
     <div className='h-screen flex items-center'>
     <div className='max-w-md mx-auto grow '>
